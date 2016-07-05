@@ -1,0 +1,10 @@
+<form class="form-horizontal">
+<div class="col-lg-8">
+<ul>
+<li ng-repeat="i in msg track by $index"><h5>{{i}}</h5></li>
+</ul>
+ 
+	<input type='text' class="col-lg-4" placeholder='message' ng-model='message'>
+	<button type="Submit" class="btn btn-primary" ng-click='send()'>Submit</button>
+</div>
+</form>
