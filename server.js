@@ -4,6 +4,7 @@ var http = require('http').Server(app);
 var api = require('./api');
 var accounts = require('./accounts');
 var chat = require('./chat');
+var validate = require('./validate')
 //var server = http.createServer(app);
 var io = require('socket.io')(http);
 
@@ -12,6 +13,7 @@ app.use(express.static('./public'));
 //http.createServer(app).listen(4000);
 //app.use(chat);
 app.use(accounts);
+//app.use(validate);
 app.use('/api',api.router);
 
 app.get('*',function(req,res){

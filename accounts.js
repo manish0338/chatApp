@@ -30,7 +30,7 @@ router
 		db.findOne(user,function(err, data){
 			if(data){
 				req.session.userId = data.id;
-				res.status(200).send();
+				res.status(200).json({username: data.username});
 			} else {
 				res.status(401).send("Incorrect username or password");
 			}

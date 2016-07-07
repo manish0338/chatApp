@@ -15,6 +15,7 @@ app.controller('chatController',function($scope){
 	$scope.send = function(){
 		console.log('send '+ $scope.message);
 		socket.emit('chat',$scope.message);
+		$scope.message = '';
 	}
 
 	socket.on('chat',function(data){
