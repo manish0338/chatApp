@@ -26,7 +26,7 @@ router
 		var user = {
 			username: req.body.username,
 			password: hash(req.body.password)
-		}
+		};
 
 		db.findOne(user,function(err, data){
 			if(data){
@@ -63,14 +63,16 @@ router
 		//console.log(req.body);
 		var query = req.body.search;
 		console.log(query);
-		query= '/.*'+query+'.*/';
-		console.log(query);
-		db.find({username:'m'}, function(err,data){
-			if(!data.length){
+		db.find(function(err,data){
+			if(data){
 				console.log(data);
+				var temp=[];
+				for(var i=0; i<data.length; i++)
+					temp.push(data[i].username);
+				res.json({result:temp});
 			}
 		});
-		res.send();
+		res.json();
 	})
 	.use(function(req, res, next){
 		if(req.session.userId){

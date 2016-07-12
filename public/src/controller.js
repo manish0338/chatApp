@@ -10,15 +10,31 @@ app.controller('loginController',function($scope,Login,$location,User){
 	};	
 });
 
-app.controller('chatController',function($scope,Chatting,connectedUsers){
+app.controller('chatController',function($scope,Chatting,connectedUsers,conversation){
 	//console.log(new Date());
 	$scope.msg = ['Manish'];
 	Chatting.newConnect();
-	Chatting.receiveMsg();
+	Chatting.receiveMsg($scope);
+	$scope.$watch(conversation.get());
+	$scope.conversation = conversation.get();
 	$scope.connectedUsers = connectedUsers.getConnectedUsers();
 	$scope.send = function(message){
-		Chatting.sendMsg(message);
+		Chatting.sendMsg(message,$scope.selectedUser);
 	};
 
-	
+	$scope.search = function(query){
+		Chatting.search(query).then(function(res){
+				console.log(res.data);
+				$scope.result = res.data.result;
+			});
+	};
+
+	$scope.add = function(name){
+		connectedUsers.addConnectedUser(name);
+		$scope.selectedUser = name;
+	};
+
+	$scope.select = function(name){
+		$scope.selectedUser = name;
+	}
 });

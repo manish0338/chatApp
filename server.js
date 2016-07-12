@@ -3,12 +3,8 @@ var app = express();
 var http = require('http').Server(app);
 var api = require('./api');
 var accounts = require('./accounts');
-var chat = require('./chat');
-var validate = require('./validate')
-//var server = http.createServer(app);
 var io = require('socket.io')(http);
 
-//app.listen(3000);
 app.use(express.static('./public'));
 //http.createServer(app).listen(4000);
 //app.use(chat);
@@ -25,20 +21,22 @@ app.get('*',function(req,res){
 var connections = {};
 
 io.on('connection',function(socket) {
-	socket.on('new',function(data){
+	console.log(socket.name + ' connected');
+	socket.on('new',function(userName){
 		console.log('new');
-		if(data in Object.keys(connections))
+		if(userName in Object.keys(connections))
 			;
 		else{
-			socket.name = data;
-			connections[data] = socket;
+			socket.name = userName;
+			connections[userName] = socket;
 		}
 	});
-    socket.on('chat',function(data){
-    	data = JSON.parse(data);
-    	console.log(data);
-    	//connections[data.recipient].emit('chat' ,data);
-    	socket.emit('chat', data);
+    socket.on('chat',function(msg){
+    	msg = JSON.parse(msg);
+    	console.log(msg);
+    	if(msg.recipient && connections[msg.recipient])
+    	connections[msg.recipient].emit('chat' ,msg);
+    	socket.emit('chat', msg);
     });
     socket.on('disconnect',function(){
     	console.log(socket.name + ' dis-connected');

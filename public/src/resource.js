@@ -16,21 +16,26 @@ angular.module('chatApp')
 		return user;
 	})
 	.factory('connectedUsers',function(){
-		var connectedUsers = [];
+		var connectedUsers = {};
+		connectedUsers.users=[];
 		connectedUsers.addConnectedUser = function(userName){
-			connectedUsers.push({username:userName});
+			//console.log('ind '+connectedUsers.indexOf({username:userName}));
+			//console.log(connectedUsers.users);
+			if(connectedUsers.users.indexOf(userName)==-1)
+				connectedUsers.users.push(userName);
 		}
 		connectedUsers.removeConnectedUser = function(index){
-			connectedUsers.splice(index,1);
+			connectedUsers.users.splice(index,1);
 		}
 		connectedUsers.getConnectedUsers = function(){
-			return connectedUsers;
+			return connectedUsers.users;
 		}
 		return connectedUsers;
 	})
-	.factory('conversation',function(){
+	.factory('conversation',function(connectedUsers){
 		var conversation = {chat:[]};
 		conversation.add = function(obj){
+			connectedUsers.addConnectedUser(obj.recipient);
 			conversation.chat.push(obj);
 		}
 		conversation.get = function(){

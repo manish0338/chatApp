@@ -4,26 +4,35 @@
 	<div class="row text-center" style="height:30%;">
 		<div class="col-xs-2" style="border-style: solid; ">
     <div class="form-group" style="padding: 0px;">
-          <input type="text" class="form-control" placeholder="Search" style='background-color: white;padding: 0px;'>
+          <li class="dropdown" style="list-style-type: none;">
+          <input type="text" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="Search" style='background-color: white;padding: 0px;' ng-change='search(query)' ng-model='query'>
+          
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="i in result" ng-click="add(i)">{{i}}</li>
+            </ul>
+        </li>
         </div>  
     </div>
-		<div class="col-xs-10" style="background-color:#f2f2f2;border-style: solid; padding: 1%"><h6>This is chat application.</h6>
+		<div class="col-xs-10" style="background-color:#f2f2f2;border-style: solid; padding: 1%"><h6>{{selectedUser}}</h6>
     </div>	
 	</div>
 
   <div class="row" style="height:10%;">
-    <div class="col-lg-2 col-md-2 col-sm-2 zero-margin">
-            <div class="list-group table-of-contents">
-              <a class="list-group-item" ng-repeat="u in connectedUsers">{{u.username}}</a>
-            </div>
-          </div>	
+    <div class="col-xs-2">
+        <div class="list-group table-of-contents">
+        <message></message>
+            <a class="list-group-item" ng-repeat="u in connectedUsers" ng-click="select(u)">{{u}}</a>
+        </div>
+    </div>	
+  
+    <div class="col-xs-10">
+    {{conversation}}
+      <ul>
+        <li ng-repeat="i in conversation track by $index"><h5>{{i}}</h5></li>
+      </ul>
     </div>
-  <div>
-    <ul>
-      <li ng-repeat="i in conversation track by $index"><h5>{{i}}</h5></li>
-    </ul>
   </div>
-  <div class="form-group" style="position:bottom;">
+  <div class="form-group" style="position: absolute;bottom: 0px;width: 90%;">
     <textarea class="form-control" rows="3" placeholder='Type your message..' style="border-style: solid;" ng-model="message"></textarea>
     <button type="Submit" class="btn btn-primary" ng-click='send(message)'>Submit</button>
   </div>
