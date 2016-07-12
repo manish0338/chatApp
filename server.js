@@ -22,12 +22,27 @@ app.get('*',function(req,res){
 
 });
 
+var connections = {};
+
 io.on('connection',function(socket) {
-	console.log('user connected');
-	socket.emit('Sent to all');
+	socket.on('new',function(data){
+		console.log('new');
+		if(data in Object.keys(connections))
+			;
+		else{
+			socket.name = data;
+			connections[data] = socket;
+		}
+	});
     socket.on('chat',function(data){
+    	data = JSON.parse(data);
     	console.log(data);
-    	io.emit('chat' ,data);
+    	//connections[data.recipient].emit('chat' ,data);
+    	socket.emit('chat', data);
+    });
+    socket.on('disconnect',function(){
+    	console.log(socket.name + ' dis-connected');
+    	delete connections[socket.name];
     });
 });
 

@@ -2,26 +2,31 @@
 
 <div class="container" style="width:100%; height:100%; ">
 	<div class="row text-center" style="height:30%;">
-		<div class="col-xs-2" style="background-color:#f2f2f2;border-style: solid; padding: 1%"><h6 style="">Manish Gangal</h6></div>
-		<div class="col-xs-10" style="background-color:#f2f2f2;border-style: solid; padding: 1%"><h6>This is chat application.</h6></div>	
+		<div class="col-xs-2" style="border-style: solid; ">
+    <div class="form-group" style="padding: 0px;">
+          <input type="text" class="form-control" placeholder="Search" style='background-color: white;padding: 0px;'>
+        </div>  
+    </div>
+		<div class="col-xs-10" style="background-color:#f2f2f2;border-style: solid; padding: 1%"><h6>This is chat application.</h6>
+    </div>	
 	</div>
 
-<div class="row" style="height:10%;">
-<div class="col-lg-2 col-md-2 col-sm-2 zero-margin">
+  <div class="row" style="height:10%;">
+    <div class="col-lg-2 col-md-2 col-sm-2 zero-margin">
             <div class="list-group table-of-contents">
-              <a class="list-group-item" href="#navbar">Navbar</a>
-              <a class="list-group-item" href="#buttons">Buttons</a>
-              <a class="list-group-item" href="#typography">Typography</a>
-              <a class="list-group-item" href="#tables">Tables</a>
-              <a class="list-group-item" href="#forms">Forms</a>
-              <a class="list-group-item" href="#navs">Navs</a>
-              <a class="list-group-item" href="#indicators">Indicators</a>
-              <a class="list-group-item" href="#progress-bars">Progress bars</a>
-              <a class="list-group-item" href="#containers">Containers</a>
-              <a class="list-group-item" href="#dialogs">Dialogs</a>
+              <a class="list-group-item" ng-repeat="u in connectedUsers">{{u.username}}</a>
             </div>
           </div>	
-</div>
+    </div>
+  <div>
+    <ul>
+      <li ng-repeat="i in conversation track by $index"><h5>{{i}}</h5></li>
+    </ul>
+  </div>
+  <div class="form-group" style="position:bottom;">
+    <textarea class="form-control" rows="3" placeholder='Type your message..' style="border-style: solid;" ng-model="message"></textarea>
+    <button type="Submit" class="btn btn-primary" ng-click='send(message)'>Submit</button>
+  </div>
 </div>
 <!--<form class="form-horizontal">
 <div class="col-lg-8">

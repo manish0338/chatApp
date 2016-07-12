@@ -22,6 +22,7 @@ router
 		res.redirect('/');
 	})
 	.post('/login',function(req,res){
+		console.log(req.body);
 		var user = {
 			username: req.body.username,
 			password: hash(req.body.password)
@@ -37,7 +38,7 @@ router
 		});
 	})
 	.post('/register', function(req, res,next){
-
+		//console.log(req.body.username);
 		var user = {
 			username: req.body.username,
 			password: hash(req.body.password)
@@ -54,9 +55,22 @@ router
 			}
 		});
 	})
-	.get('logout', function(req, res){
+	.get('/logout', function(req, res){
 		req.session.userId = null;
 		res.redirect('/');
+	})
+	.post('/search',function(req,res){
+		//console.log(req.body);
+		var query = req.body.search;
+		console.log(query);
+		query= '/.*'+query+'.*/';
+		console.log(query);
+		db.find({username:'m'}, function(err,data){
+			if(!data.length){
+				console.log(data);
+			}
+		});
+		res.send();
 	})
 	.use(function(req, res, next){
 		if(req.session.userId){
